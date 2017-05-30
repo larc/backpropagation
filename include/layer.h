@@ -21,6 +21,7 @@ class layer
 		vec neurons;
 		vec d_neurons;
 		mat weights;
+		vec bias;
 
 		layer() = default;
 		~layer() = default;

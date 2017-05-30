@@ -14,7 +14,7 @@ LIBS = $(OPENGL_LIBS) $(SUITESPARSE_LIBS) $(BLAS_LIBS) -larmadillo
 ## !! Do not edit below this line
 
 HEADERS := $(wildcard include/*.h)
-SOURCES := $(wildcard src/*.cpp) $(wildcard src/viewer/*.cpp)
+SOURCES := $(wildcard src/*.cpp)
 
 OBJECTS := $(addprefix obj/,$(notdir $(SOURCES:.cpp=.o)))
 

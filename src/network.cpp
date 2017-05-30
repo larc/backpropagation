@@ -1,5 +1,7 @@
 #include "network.h"
 
+#include <cassert>
+
 network::network(const size_t & h_layers)
 {
 	n_layers = h_layers + 1;
@@ -37,12 +39,14 @@ void network::backprogation(const vec & input, const vec & output)
 	layers[0].backprogation(dl_da, da_dx, input);
 }
 
-void network::train(const mat & inputs, const mat & outputs, const size_t & n_neurons, size_t n_iter)
+void network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter)
 {
-	layers[0].init(inputs.n_rows, n_neurons);
-	for(index_t i = 1; i < n_layers - 1; i++)
-		layers[i].init(n_neurons, n_neurons);
-	layers[n_layers - 1].init(n_neurons, outputs.n_rows);
+	assert(n_neurons.size() == n_layers - 1);
+
+	layers[0].init(inputs.n_rows, n_neurons.front());
+	for(index_t i = 1; i < n_neurons.size(); i++)
+		layers[i].init(n_neurons[i - 1], n_neurons[i]);
+	layers[n_layers - 1].init(n_neurons.back(), outputs.n_rows);
 
 	percent_t error;
 	while(n_iter--)

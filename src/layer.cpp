@@ -19,13 +19,16 @@ void layer::init(const size_t & m, const size_t & n)
 {
 	weights.resize(m, n);
 	weights.randu();
-	weights *= 2 * epsilon;
-	weights -= epsilon;
+
+	bias.resize(n);
+	bias.ones();
+//	weights *= 2 * epsilon;
+//	weights -= epsilon;
 }
 
 void layer::forward(const vec & input, function_t f)
 {
-	neurons = weights.t() * input + 1;
+	neurons = weights.t() * input + bias;
 	d_neurons = neurons;
 	neurons.transform(f);
 }
@@ -40,6 +43,7 @@ void layer::backprogation(vec & dl_da, mat & da_dx, const vec & x, function_t df
 	dl_da %= d_neurons;
 
 	weights -= eta * (x * dl_da.t());
+	bias -= eta * dl_da;
 	
 	da_dx = weights * dl_da;
 }

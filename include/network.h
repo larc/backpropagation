@@ -3,6 +3,10 @@
 
 #include "layer.h"
 
+#include <vector>
+
+using namespace std;
+
 typedef double percent_t;
 
 class network
@@ -18,7 +22,7 @@ class network
 		const vec & o_layer() const;
 		void forward(const vec & input, const vec & output);
 		void backprogation(const vec & input, const vec & output);
-		void train(const mat & inputs, const mat & outputs, const size_t & n_neurons, size_t n_iter);
+		void train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter);
 		percent_t test(const mat & inputs, const mat & outputs);
 };
 
