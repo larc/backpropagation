@@ -22,8 +22,6 @@ void layer::init(const size_t & m, const size_t & n)
 
 	bias.resize(n);
 	bias.ones();
-//	weights *= 2 * epsilon;
-//	weights -= epsilon;
 }
 
 void layer::forward(const vec & input, function_t f)

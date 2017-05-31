@@ -23,7 +23,7 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(LD) $(OBJECTS) -o $(TARGET) $(CFLAGS) $(LFLAGS) $(LIBS)
 
-obj/%.o: src/%.cpp obj
+obj/%.o: src/%.cpp | obj
 	$(CC) -c $< -o $@ $(CFLAGS) 
 
 obj:
