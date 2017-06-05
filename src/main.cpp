@@ -14,9 +14,9 @@ void read_mnist_labels(mat & labels, const string & file);
 
 int main()
 {
-	main_mnist();
-	//main_iris();
-	//main_xor();
+//	main_mnist();
+	main_iris();
+	main_xor();
 
 	return 0;
 }
@@ -152,7 +152,7 @@ void main_iris()
 	normalise(test_in);
 
 	network net(2);
-	net.train(train_in, train_out, {8, 6}, 6000);
+	net.train_momentum(train_in, train_out, {8, 6}, 6000);
 	cout << "error train: " << net.test(train_in, train_out) << endl;
 	cout << "error test: " << net.test(test_in, test_out) << endl;
 }

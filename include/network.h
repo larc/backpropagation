@@ -7,8 +7,6 @@
 
 using namespace std;
 
-typedef double percent_t;
-
 class network
 {
 	private:
@@ -20,10 +18,13 @@ class network
 		network(const size_t & h_layers = 0);
 		virtual ~network();
 		const vec & o_layer() const;
-		void forward(const vec & input, const vec & output);
-		void backprogation(const vec & input, const vec & output);
+		void train_momentum(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter, const percent_t & alpha = 0.2);
 		void train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter);
 		percent_t test(const mat & inputs, const mat & outputs);
+	
+	private:
+		void init(const size_t & size_in, const size_t & size_out, const vector<size_t> & n_neurons);
+		void forward(const vec & input, const vec & output);
 };
 
 #endif // NETWORK_H
