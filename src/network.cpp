@@ -18,7 +18,7 @@ const vec & network::o_layer() const
 	return layers[n_layers - 1];
 }
 
-void network::train_momentum(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter, const percent_t & alpha)
+size_t network::train_momentum(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter, const percent_t & alpha)
 {
 	init(inputs.n_rows, outputs.n_rows, n_neurons);
 	
@@ -27,15 +27,23 @@ void network::train_momentum(const mat & inputs, const mat & outputs, const vect
 	{
 		deltas_w[w] = layers[w].weights * 0;
 	}
-
-	while(n_iter--)
+	
+	_os_open
+	
+	percent_t error = 1;
+	size_t iter = 0;
+	while(iter < n_iter && error > 0.01)
 	{
+		iter++;
+
+		error = 0;
 		for(index_t c = 0; c < inputs.n_cols; c++)
 		{
 			const vec & input = inputs.col(c);
 			const vec & output = outputs.col(c);
 
 			forward(input, output);	
+			error += loss > 0.01;
 
 			vec dl_da = o_layer() - output;
 			mat da_dx;
@@ -45,9 +53,15 @@ void network::train_momentum(const mat & inputs, const mat & outputs, const vect
 	
 			layers[0].backprogation_momentum(dl_da, da_dx, deltas_w[0], input, alpha);
 		}
+
+		error /= inputs.n_cols;
+		_os_error(iter, error)
 	}
 
+	_os_close 
+
 	delete [] deltas_w;
+	return iter;
 }
 
 void network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter)

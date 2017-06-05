@@ -152,7 +152,9 @@ void main_iris()
 	normalise(test_in);
 
 	network net(2);
-	net.train_momentum(train_in, train_out, {8, 6}, 6000);
+	percent_t alpha;
+	cout << "input alpha: "; cin >> alpha;
+	cout << "n_iterations: " << net.train_momentum(train_in, train_out, {8, 6}, 10000, alpha) << endl;
 	cout << "error train: " << net.test(train_in, train_out) << endl;
 	cout << "error test: " << net.test(test_in, test_out) << endl;
 }
