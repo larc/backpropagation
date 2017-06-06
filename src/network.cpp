@@ -95,6 +95,9 @@ percent_t network::test(const mat & inputs, const mat & outputs)
 	for(index_t c = 0; c < inputs.n_cols; c++)
 	{
 		forward(inputs.col(c), outputs.col(c));
+	//	cout << outputs.col(c).t() << endl;
+	//	cout << o_layer().t() << endl;
+	//	cout << loss << endl;
 		error += loss > 0.01;
 	}
 
@@ -104,6 +107,8 @@ percent_t network::test(const mat & inputs, const mat & outputs)
 void network::init(const size_t & size_in, const size_t & size_out, const vector<size_t> & n_neurons)
 {	
 	assert(n_neurons.size() == n_layers - 1);
+	
+	arma_rng::set_seed_random();
 
 	layers[0].init(size_in, n_neurons.front());
 	for(index_t i = 1; i < n_neurons.size(); i++)

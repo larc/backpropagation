@@ -26,11 +26,10 @@ layer::operator const vec & () const
 
 void layer::init(const size_t & m, const size_t & n)
 {
-	weights.resize(m, n);
-	weights.randu();
-
-	bias.resize(n);
-	bias.ones();
+	weights.randu(m, n);
+	weights *= 2 * epsilon;
+	weights -= epsilon;
+	bias.ones(n);
 }
 
 void layer::forward(const vec & input)

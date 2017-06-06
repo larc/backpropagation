@@ -4,8 +4,8 @@
 #include <armadillo>
 #include <cmath>
 
-#define eta 1 // learning rate
-#define epsilon .00001
+#define eta 0.1 // learning rate
+#define epsilon 0.01
 
 using namespace arma;
 
