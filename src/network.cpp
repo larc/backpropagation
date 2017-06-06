@@ -64,19 +64,24 @@ size_t network::train_momentum(const mat & inputs, const mat & outputs, const ve
 	return iter;
 }
 
-void network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter)
+size_t network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter)
 {
 	init(inputs.n_rows, outputs.n_rows, n_neurons);
 
-	percent_t error;
-	while(n_iter--)
+	percent_t error = 1;
+	size_t iter = 0;
+	while(iter < n_iter && error > 0.01)
 	{
+		iter++;
+
+		error = 0;
 		for(index_t c = 0; c < inputs.n_cols; c++)
 		{
 			const vec & input = inputs.col(c);
 			const vec & output = outputs.col(c);
 
 			forward(input, output);	
+			error += loss > 0.01;
 			
 			vec dl_da = o_layer() - output;
 			mat da_dx;
@@ -86,7 +91,11 @@ void network::train(const mat & inputs, const mat & outputs, const vector<size_t
 	
 			layers[0].backprogation(dl_da, da_dx, input);
 		}
+		
+		error /= inputs.n_cols;
 	}
+
+	return iter;
 }
 
 percent_t network::test(const mat & inputs, const mat & outputs)

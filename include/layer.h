@@ -5,7 +5,7 @@
 #include <cmath>
 
 #define eta 0.1 // learning rate
-#define epsilon 0.01
+#define epsilon 0.1
 
 using namespace arma;
 

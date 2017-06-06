@@ -1,13 +1,26 @@
 #include "test.h"
 
-test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & _n_iter)
+test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & max_n_iter)
 {
 	dataset = _dataset;
-	n_iter = _n_iter;
 	h_layers = n_neurons.size();
 
 	network net(n_neurons.size());
-	TIC(train_time) net.train(train_in, train_out, n_neurons, n_iter); TOC(train_time)
+
+	train_type = "normal";
+	TIC(train_time)
+	n_iter = net.train(train_in, train_out, n_neurons, max_n_iter);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT
+	
+	train_type = "momentum";
+	TIC(train_time) 
+	n_iter = net.train_momentum(train_in, train_out, n_neurons, max_n_iter);
+	TOC(train_time)
 
 	train_error = net.test(train_in, train_out);
 	test_error = net.test(test_in, test_out);

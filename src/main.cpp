@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <cstdio>
 
-
 using namespace std;
 
 void main_iris();
@@ -16,7 +15,6 @@ int main()
 	PRINT_HEADER
 	main_mnist();
 	main_iris();
-//	main_xor();
 
 	return 0;
 }
@@ -83,6 +81,6 @@ void main_iris()
 	normalise(train_in);
 	normalise(test_in);
 
-	test_nn("mnist", train_in, train_out, test_in, test_out, {8, 10}, 10000);
+	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 10000);
 }
 
