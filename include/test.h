@@ -6,9 +6,9 @@
 #define TIC(t) (t) = omp_get_wtime();
 #define TOC(t) (t) = omp_get_wtime() - (t);
 
-#define PRINT_HEADER printf("| %12s | %12s | %12s | %12s | %12s | %12s | %12s |\n", "dataset", "train_type", "train_time", "n_iter", "h_layers", "train_error", "test_error"); \
-					 printf("| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |\n"); 
-#define PRINT_RESULT printf("| %12s | %12s | %12.3lf | %12ld | %12ld | %12.3lf | %12.3lf |\n", dataset, train_type, train_time, n_iter, h_layers, train_error * 100, test_error * 100);
+#define PRINT_HEADER printf("| %12s | %12s | %12s | %12s | %12s | %12s | %12s | %16s |\n", "dataset", "train_type", "train_time", "n_iter", "h_layers", "train_error", "test_error", "h_units"); \
+					 printf("| ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ | ---------------- |\n"); 
+#define PRINT_RESULT printf("| %12s | %12s | %12.3lf | %12ld | %12ld | %12.3lf | %12.3lf | %16s |\n", dataset, train_type, train_time, n_iter, h_layers, train_error * 100, test_error * 100, h_units.c_str());
 
 struct test_nn
 {
@@ -24,6 +24,8 @@ struct test_nn
 };
 
 /**************************************************************************************************/
+
+
 
 void read_mnist_data(mat & data, const string & file);
 void read_mnist_labels(mat & labels, const string & file);

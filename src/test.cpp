@@ -4,6 +4,9 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 {
 	dataset = _dataset;
 	h_layers = n_neurons.size();
+	string h_units = "";
+	for(const size_t hu: n_neurons)
+		h_units += " " + to_string(hu);
 
 	network net(n_neurons.size());
 

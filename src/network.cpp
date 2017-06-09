@@ -2,6 +2,9 @@
 
 #include <cassert>
 
+percent_t network::tol_error = 0.01;
+percent_t network::threshold = 0.01;
+
 network::network(const size_t & h_layers)
 {
 	n_layers = h_layers + 1;
@@ -32,7 +35,7 @@ size_t network::train_momentum(const mat & inputs, const mat & outputs, const ve
 	
 	percent_t error = 1;
 	size_t iter = 0;
-	while(iter < n_iter && error > 0.01)
+	while(iter < n_iter && error > tol_error)
 	{
 		iter++;
 
@@ -43,7 +46,7 @@ size_t network::train_momentum(const mat & inputs, const mat & outputs, const ve
 			const vec & output = outputs.col(c);
 
 			forward(input, output);	
-			error += loss > 0.01;
+			error += loss > threshold;
 
 			vec dl_da = o_layer() - output;
 			mat da_dx;
@@ -64,13 +67,13 @@ size_t network::train_momentum(const mat & inputs, const mat & outputs, const ve
 	return iter;
 }
 
-size_t network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, size_t n_iter)
+size_t network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter)
 {
 	init(inputs.n_rows, outputs.n_rows, n_neurons);
 
 	percent_t error = 1;
 	size_t iter = 0;
-	while(iter < n_iter && error > 0.01)
+	while(iter < n_iter && error > tol_error)
 	{
 		iter++;
 
@@ -81,7 +84,7 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 			const vec & output = outputs.col(c);
 
 			forward(input, output);	
-			error += loss > 0.01;
+			error += loss > threshold;
 			
 			vec dl_da = o_layer() - output;
 			mat da_dx;
@@ -107,7 +110,7 @@ percent_t network::test(const mat & inputs, const mat & outputs)
 	//	cout << outputs.col(c).t() << endl;
 	//	cout << o_layer().t() << endl;
 	//	cout << loss << endl;
-		error += loss > 0.01;
+		error += loss > threshold;
 	}
 
 	return error / inputs.n_cols;
