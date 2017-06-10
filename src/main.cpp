@@ -14,7 +14,7 @@ int main()
 {
 	PRINT_HEADER
 	main_mnist();
-//	main_iris();
+	main_iris();
 
 	return 0;
 }
@@ -32,9 +32,9 @@ void main_mnist()
 
 	train_in /= 255;
 	test_in /= 255;
-	
+
 	test_nn("mnist", train_in, train_out, test_in, test_out, {25}, 21);
-//	test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 10);
+	//test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 1);
 }
 
 
@@ -82,10 +82,7 @@ void main_iris()
 	normalise(train_in);
 	normalise(test_in);
 
-	test_nn("iris", train_in, train_out, test_in, test_out, {4}, 10000);
-	test_nn("iris", train_in, train_out, test_in, test_out, {4, 4}, 10000);
-	test_nn("iris", train_in, train_out, test_in, test_out, {5, 5}, 10000);
-	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 10000);
-	test_nn("iris", train_in, train_out, test_in, test_out, {10}, 10000);
+	shuffle(train_in);
+	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 20000);
 }
 

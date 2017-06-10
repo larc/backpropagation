@@ -39,6 +39,35 @@ void layer::forward(const vec & input)
 	neurons.transform(f);
 }
 
+void layer::compute_gradients(vec & dl_da, mat & da_dx, mat & dl_dw, const vec & x)
+{
+	d_neurons.transform(df);
+	
+	if(da_dx.n_rows) //false in output layer to last hidden layer
+		dl_da = da_dx;
+		
+	dl_da %= d_neurons;
+
+	dl_dw = x * dl_da.t();
+	
+	da_dx = weights * dl_da;
+}
+
+void layer::backprogation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x)
+{
+	d_neurons.transform(df);
+	
+	if(da_dx.n_rows) //false in output layer to last hidden layer
+		dl_da = da_dx;
+		
+	dl_da %= d_neurons;
+
+	delta_w += x * dl_da.t(); //sgd
+	bias -= eta * dl_da;
+	
+	da_dx = weights * dl_da;
+}
+
 void layer::backprogation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x, const percent_t & alpha)
 {
 	d_neurons.transform(df);
@@ -64,9 +93,9 @@ void layer::backprogation(vec & dl_da, mat & da_dx, const vec & x)
 		
 	dl_da %= d_neurons;
 
+	da_dx = weights * dl_da;
+	
 	weights -= eta * (x * dl_da.t());
 	bias -= eta * dl_da;
-	
-	da_dx = weights * dl_da;
 }
 

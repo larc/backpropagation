@@ -7,8 +7,45 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	string h_units = "";
 	for(const size_t hu: n_neurons)
 		h_units += " " + to_string(hu);
+	
+	char iter_file[128];
+	auto gen_plot = [&]()
+	{
+		sprintf(iter_file, "mv tmp/iter_loss tmp/%s_%s.error", dataset, train_type);
+		int s = system(iter_file);
+	};
 
 	network net(n_neurons.size());
+
+	train_type = "normal_new";
+	TIC(train_time)
+	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
+	
+	train_type = "momentum_new";
+	TIC(train_time) 
+	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter, 1, 0.2);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
+	
+	train_type = "mini_batches_new";
+	TIC(train_time) 
+	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter, 32);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
 
 	train_type = "normal";
 	TIC(train_time)
@@ -18,7 +55,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	train_error = net.test(train_in, train_out);
 	test_error = net.test(test_in, test_out);
 	
-	PRINT_RESULT
+	PRINT_RESULT gen_plot();
 	
 	train_type = "momentum";
 	TIC(train_time) 
@@ -28,7 +65,17 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	train_error = net.test(train_in, train_out);
 	test_error = net.test(test_in, test_out);
 	
-	PRINT_RESULT
+	PRINT_RESULT gen_plot();
+	
+	train_type = "mini_batches";
+	TIC(train_time) 
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 32);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
 }
 
 /**************************************************************************************************/

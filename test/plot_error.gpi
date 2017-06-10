@@ -1,0 +1,14 @@
+set terminal pdf size 9,5 font ',20'
+set key noenhanced
+set xlabel font ',24'
+set ylabel font ',24'
+set grid
+set xlabel '# iter'
+set ylabel 'error (%)'
+set xrange [*:]
+set yrange [*:]
+set output "../tmp/plot_error.pdf"
+FILES = system("ls ../tmp/*.error")
+do for [i=1:words(FILES)] {
+	plot word(FILES, i) u 1:2 w l lw 1 t word(FILES, i)
+}
