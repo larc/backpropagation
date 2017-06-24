@@ -17,6 +17,36 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	network net(n_neurons.size());
 
+	train_type = "normal";
+	TIC(train_time)
+	n_iter = net.train(train_in, train_out, n_neurons, max_n_iter);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
+	
+	train_type = "momentum";
+	TIC(train_time) 
+	n_iter = net.train_momentum(train_in, train_out, n_neurons, max_n_iter);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
+	
+	train_type = "mini_batches";
+	TIC(train_time) 
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 32);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+	
+	PRINT_RESULT gen_plot();
+
 	train_type = "normal_new";
 	TIC(train_time)
 	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter);
@@ -47,35 +77,6 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	
 	PRINT_RESULT gen_plot();
 
-	train_type = "normal";
-	TIC(train_time)
-	n_iter = net.train(train_in, train_out, n_neurons, max_n_iter);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-	
-	PRINT_RESULT gen_plot();
-	
-	train_type = "momentum";
-	TIC(train_time) 
-	n_iter = net.train_momentum(train_in, train_out, n_neurons, max_n_iter);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-	
-	PRINT_RESULT gen_plot();
-	
-	train_type = "mini_batches";
-	TIC(train_time) 
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 32);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-	
-	PRINT_RESULT gen_plot();
 }
 
 /**************************************************************************************************/

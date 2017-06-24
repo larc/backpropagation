@@ -43,14 +43,17 @@ size_t network::train_new(const mat & inputs, const mat & outputs, const vector<
 	while(iter++ < max_iter && error > tol_error)
 	{
 		error = 0;
+		c_start = 0;
 		for(index_t b = 0; b < n_batches; b++)
 		{
-			c_start = b * batch_size;
-			c_end = b < n_batches - 1 ? c_start + batch_size - 1 : inputs.n_cols - 1;
-		
+			c_end = c_start + batch_size - 1;
+			if(c_end >= inputs.n_cols) c_end = inputs.n_cols - 1;
+			
 			error += train_batch(inputs.cols(c_start, c_end), outputs.cols(c_start, c_end), alpha);
+	
+			c_start += batch_size;
 		}
-		error /= n_batches;
+		error /= inputs.n_cols;
 		_os_error(iter, error)
 	}
 	_os_close
@@ -255,29 +258,34 @@ percent_t network::train_batch(const mat & inputs, const mat & outputs, const pe
 		const vec & output = outputs.col(i);
 
 		forward(input, output);
-		error += loss;
+		error += loss > threshold;
 		
 		vec dl_da = o_layer() - output;
 		mat da_dx, dl_dw;
 
 		for(index_t l = n_layers - 1; l > 0; l--)
 		{
+//			layers[l].backprogation(dl_da, da_dx, layers[l - 1]);		
 			layers[l].compute_gradients(dl_da, da_dx, dl_dw, layers[l - 1]);
-			deltas_w[l] += beta * dl_dw;
-			deltas_b[l] += dl_da;
+			layers[l].weights += beta * dl_dw; 
+			layers[l].bias = beta * dl_da;
+//			deltas_w[l] += beta * dl_dw;
+//			deltas_b[l] += beta * dl_da;
 		}
-		
+//		layers[0].backprogation(dl_da, da_dx, input);		
 		layers[0].compute_gradients(dl_da, da_dx, dl_dw, input);
-		deltas_w[0] += beta * dl_dw;
-		deltas_b[0] += dl_da;
+		layers[0].weights += beta * dl_dw; 
+		layers[0].bias = beta * dl_da;
+//		deltas_w[0] += beta * dl_dw;
+//		deltas_b[0] += beta * dl_da;
 	}
-	
+/*	
 	for(index_t l = 0; l < n_layers; l++)
 	{
 		layers[l].weights += deltas_w[l]; 
 		layers[l].bias = deltas_b[l];
-	}
+	}*/
 
-	return error / n_inputs;
+	return error;
 }
 
