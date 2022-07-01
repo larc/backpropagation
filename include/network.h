@@ -12,7 +12,7 @@
 	#define _os_error(i, loss)
 	#define _os_close
 #else
-	#define _os_open ofstream os("tmp/iter_loss");
+	#define _os_open ofstream os(std::string(SRC_PATH) + "/tmp/iter_loss");
 	#define _os_error(i, loss) os << i << " " << loss << endl;
 	#define _os_close os.close();
 #endif
