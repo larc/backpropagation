@@ -1,10 +1,10 @@
-INCLUDE_PATH		= -I./include 
+INCLUDE_PATH		= -I./include
 LIBRARY_PATH		=
 
 TARGET = cnn
 CC = g++
 LD = g++
-CFLAGS = -O3 -fopenmp $(INCLUDE_PATH) 
+CFLAGS = -O3 -fopenmp $(INCLUDE_PATH)
 LFLAGS = -O3 -fopenmp $(LIBRARY_PATH)
 LIBS = -larmadillo
 
@@ -22,7 +22,7 @@ $(TARGET): $(OBJECTS)
 	$(LD) $(OBJECTS) -o $(TARGET) $(CFLAGS) $(LFLAGS) $(LIBS)
 
 obj/%.o: src/%.cpp | obj
-	$(CC) -c $< -o $@ $(CFLAGS) 
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 obj:
 	mkdir obj

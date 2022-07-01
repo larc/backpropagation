@@ -21,7 +21,7 @@ class network;
 class layer
 {
 	private:
-		static function_t f; 
+		static function_t f;
 		static function_t df;
 
 	public:
@@ -36,7 +36,7 @@ class layer
 		layer() = default;
 		~layer() = default;
 		operator const vec & () const;
-		void init(const size_t & m, const size_t & n);	
+		void init(const size_t & m, const size_t & n);
 		void forward(const vec & input);
 		void compute_gradients(vec & dl_da, mat & da_dx, mat & dl_dw, const vec & x);
 		void backprogation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x);
