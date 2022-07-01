@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+
 percent_t network::tol_error = 0.01;
 percent_t network::threshold = 0.01;
 

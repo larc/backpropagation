@@ -25,11 +25,11 @@ void main_mnist()
 	mat train_in, test_in;
 	mat train_out, test_out;
 
-	read_mnist_labels(train_out, "data/train-labels.idx1-ubyte");
-	read_mnist_data(train_in, "data/train-images.idx3-ubyte");
+	read_mnist_labels(train_out, data_path("train-labels.idx1-ubyte"));
+	read_mnist_data(train_in, data_path("train-images.idx3-ubyte"));
 
-	read_mnist_labels(test_out, "data/t10k-labels.idx1-ubyte");
-	read_mnist_data(test_in, "data/t10k-images.idx3-ubyte");
+	read_mnist_labels(test_out, data_path("t10k-labels.idx1-ubyte"));
+	read_mnist_data(test_in, data_path("t10k-images.idx3-ubyte"));
 
 	train_in /= 255;
 	test_in /= 255;
@@ -41,7 +41,6 @@ void main_mnist()
 
 void main_iris()
 {
-	string data = "data/iris.txt";
 	mat train_in(4, 120);
 	mat train_out(3, 120, fill::zeros);
 	mat test_in(4, 30);
@@ -49,7 +48,7 @@ void main_iris()
 
 	string slabel;
 
-	ifstream is(data);
+	ifstream is(data_path("iris.txt"));
 
 	for(index_t a = 0, b = 0, i = 0; i < 150; i++)
 	{

@@ -19,6 +19,7 @@
 
 using namespace std;
 
+
 class network
 {
 	public:
@@ -47,6 +48,7 @@ class network
 		void forward(const vec & input, const vec & output);
 		percent_t train_batch(const mat & inputs, const mat & outputs, const percent_t & alpha);
 };
+
 
 #endif // NETWORK_H
 

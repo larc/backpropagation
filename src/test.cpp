@@ -14,8 +14,8 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	char iter_file[128];
 	auto gen_plot = [&]()
 	{
-		sprintf(iter_file, "mv tmp/iter_loss tmp/%s_%s.error", dataset, train_type);
-		int s = system(iter_file);
+		sprintf(iter_file, "mv tmp/iter_loss %s/tmp/%s_%s.error", SRC_PATH, dataset, train_type);
+		system(iter_file);
 	};
 
 	network net(n_neurons.size());
@@ -100,7 +100,7 @@ void read_mnist_labels(mat & labels, const string & file)
 	labels.zeros();
 
 	int8_t label;
-	for(index_t i = 0; i < n; i++)
+	for(int32_t i = 0; i < n; i++)
 	{
 		is.read((char *) &label, sizeof(int8_t));
 		labels((int) label, i) = 1;
@@ -129,7 +129,7 @@ void read_mnist_data(mat & data, const string & file)
 	data.resize(size, n);
 	double * memptr;
 
-	for(index_t i = 0; i < n; i++)
+	for(int32_t i = 0; i < n; i++)
 	{
 		is.read((char *) buffer, size);
 		memptr = data.colptr(i);

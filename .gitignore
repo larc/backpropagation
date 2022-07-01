@@ -1,6 +1,4 @@
 *.swp
-obj/*.o
-tmp/*
+tmp
+build
 
-
-cnn

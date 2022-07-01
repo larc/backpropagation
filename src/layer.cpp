@@ -1,5 +1,6 @@
 #include "layer.h"
 
+
 double sigmoid(const double & x)
 {
 	return 1 / (1 + exp(-x));

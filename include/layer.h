@@ -9,6 +9,7 @@
 
 using namespace arma;
 
+
 typedef uword index_t;
 typedef double percent_t;
 typedef double (*function_t) (const double &);
@@ -45,6 +46,7 @@ class layer
 
 	friend network;
 };
+
 
 #endif // LAYER_H
 
