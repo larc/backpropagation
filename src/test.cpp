@@ -14,7 +14,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	char iter_file[128];
 	auto gen_plot = [&]()
 	{
-		sprintf(iter_file, "mv tmp/iter_loss %s/tmp/%s_%s.error", SRC_PATH, dataset, train_type);
+		sprintf(iter_file, "mv %s/tmp/iter_loss %s/tmp/%s_%s.error", SRC_PATH, SRC_PATH, dataset, train_type);
 		system(iter_file);
 	};
 

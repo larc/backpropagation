@@ -34,8 +34,8 @@ void main_mnist()
 	train_in /= 255;
 	test_in /= 255;
 
-	test_nn("mnist", train_in, train_out, test_in, test_out, {25}, 21);
-	//test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 1);
+	// http://yann.lecun.com/exdb/mnist/
+	test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 100);
 }
 
 
