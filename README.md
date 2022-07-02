@@ -23,7 +23,7 @@ This code is a simple implementation of the backpropagation neural networks algo
 The test folder contains some scripts to plot the curve of error per iteration. The table below shows the output with some results for training and testing with the mnist and iris datasets.
 
 |      dataset |       train_type |   train_time |       n_iter |     h_layers |  train_error |   test_error |          h_units |
-| ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | ------------ | ---------------- |
+| -----------: | ---------------: | -----------: | -----------: | -----------: | -----------: | -----------: | ---------------: |
 |        mnist |           normal |     1122.792 |           45 |            1 |        1.593 |        6.860 |              300 |
 |        mnist |         momentum |     1574.166 |           46 |            1 |        1.277 |        6.860 |              300 |
 |        mnist |     mini_batches |     1251.950 |          100 |            1 |       17.890 |       18.200 |              300 |
