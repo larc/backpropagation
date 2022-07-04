@@ -40,9 +40,9 @@ class layer
 		void init(const size_t & m, const size_t & n);
 		void forward(const vec & input);
 		void compute_gradients(vec & dl_da, mat & da_dx, mat & dl_dw, const vec & x);
-		void backprogation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x);
-		void backprogation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x, const percent_t & alpha);
-		void backprogation(vec & dl_da, mat & da_dx, const vec & x);
+		void backpropagation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x);
+		void backpropagation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x, const percent_t & alpha);
+		void backpropagation(vec & dl_da, mat & da_dx, const vec & x);
 
 	friend network;
 };

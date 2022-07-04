@@ -14,7 +14,7 @@ void main_mnist();
 int main()
 {
 	PRINT_HEADER
-	main_mnist();
+//	main_mnist();
 	main_iris();
 
 	return 0;

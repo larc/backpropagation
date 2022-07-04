@@ -102,9 +102,9 @@ size_t network::train_sgd(const mat & inputs, const mat & outputs, const vector<
 				mat da_dx;
 
 				for(index_t i = n_layers - 1; i > 0; i--)
-					layers[i].backprogation_sgd(dl_da, da_dx, deltas_w[i], layers[i - 1]);
+					layers[i].backpropagation_sgd(dl_da, da_dx, deltas_w[i], layers[i - 1]);
 
-				layers[0].backprogation_sgd(dl_da, da_dx, deltas_w[0], input);
+				layers[0].backpropagation_sgd(dl_da, da_dx, deltas_w[0], input);
 
 			}
 
@@ -152,9 +152,9 @@ size_t network::train_momentum(const mat & inputs, const mat & outputs, const ve
 			mat da_dx;
 
 			for(index_t i = n_layers - 1; i > 0; i--)
-				layers[i].backprogation_momentum(dl_da, da_dx, deltas_w[i], layers[i - 1], alpha);
+				layers[i].backpropagation_momentum(dl_da, da_dx, deltas_w[i], layers[i - 1], alpha);
 
-			layers[0].backprogation_momentum(dl_da, da_dx, deltas_w[0], input, alpha);
+			layers[0].backpropagation_momentum(dl_da, da_dx, deltas_w[0], input, alpha);
 		}
 
 		error /= inputs.n_cols;
@@ -190,9 +190,9 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 			mat da_dx;
 
 			for(index_t i = n_layers - 1; i > 0; i--)
-				layers[i].backprogation(dl_da, da_dx, layers[i - 1]);
+				layers[i].backpropagation(dl_da, da_dx, layers[i - 1]);
 
-			layers[0].backprogation(dl_da, da_dx, input);
+			layers[0].backpropagation(dl_da, da_dx, input);
 		}
 
 		error /= inputs.n_cols;
@@ -209,9 +209,6 @@ percent_t network::test(const mat & inputs, const mat & outputs)
 	for(index_t c = 0; c < inputs.n_cols; c++)
 	{
 		forward(inputs.col(c), outputs.col(c));
-	//	cout << outputs.col(c).t() << endl;
-	//	cout << o_layer().t() << endl;
-	//	cout << loss << endl;
 		error += loss > threshold;
 	}
 
@@ -266,14 +263,14 @@ percent_t network::train_batch(const mat & inputs, const mat & outputs, const pe
 
 		for(index_t l = n_layers - 1; l > 0; l--)
 		{
-//			layers[l].backprogation(dl_da, da_dx, layers[l - 1]);
+//			layers[l].backpropagation(dl_da, da_dx, layers[l - 1]);
 			layers[l].compute_gradients(dl_da, da_dx, dl_dw, layers[l - 1]);
 			layers[l].weights += beta * dl_dw;
 			layers[l].bias = beta * dl_da;
 //			deltas_w[l] += beta * dl_dw;
 //			deltas_b[l] += beta * dl_da;
 		}
-//		layers[0].backprogation(dl_da, da_dx, input);
+//		layers[0].backpropagation(dl_da, da_dx, input);
 		layers[0].compute_gradients(dl_da, da_dx, dl_dw, input);
 		layers[0].weights += beta * dl_dw;
 		layers[0].bias = beta * dl_da;

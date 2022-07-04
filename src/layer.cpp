@@ -52,7 +52,7 @@ void layer::compute_gradients(vec & dl_da, mat & da_dx, mat & dl_dw, const vec &
 	dl_dw = x * dl_da.t();
 }
 
-void layer::backprogation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x)
+void layer::backpropagation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x)
 {
 	d_neurons.transform(df);
 
@@ -68,7 +68,7 @@ void layer::backprogation_sgd(vec & dl_da, mat & da_dx, mat & delta_w, const vec
 	bias -= eta * dl_da;
 }
 
-void layer::backprogation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x, const percent_t & alpha)
+void layer::backpropagation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, const vec & x, const percent_t & alpha)
 {
 	d_neurons.transform(df);
 
@@ -85,7 +85,7 @@ void layer::backprogation_momentum(vec & dl_da, mat & da_dx, mat & delta_w, cons
 	bias -= eta * dl_da;
 }
 
-void layer::backprogation(vec & dl_da, mat & da_dx, const vec & x)
+void layer::backpropagation(vec & dl_da, mat & da_dx, const vec & x)
 {
 	mat dl_dw;
 	compute_gradients(dl_da, da_dx, dl_dw, x);

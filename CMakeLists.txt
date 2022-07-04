@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(backprogation VERSION 3.14)
+project(backpropagation)
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Release)
@@ -22,9 +22,9 @@ add_compile_definitions(SRC_PATH="${CMAKE_CURRENT_SOURCE_DIR}")
 
 FILE(GLOB_RECURSE cpp_sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
-add_executable(backprogation ${cpp_sources})
-target_link_libraries(backprogation OpenMP::OpenMP_CXX)
-target_link_libraries(backprogation ${ARMADILLO_LIBRARIES})
+add_executable(backpropagation ${cpp_sources})
+target_link_libraries(backpropagation OpenMP::OpenMP_CXX)
+target_link_libraries(backpropagation ${ARMADILLO_LIBRARIES})
 
 
 file(MAKE_DIRECTORY tmp)

@@ -8,7 +8,7 @@ This code is a simple implementation of the backpropagation neural networks algo
     cd build
     cmake ..
     make
-    ./backprogation
+    ./backpropagation
 
 ## Datasets
 
