@@ -15,13 +15,14 @@ const vec & network::o_layer() const
 	return layers.back();
 }
 
-size_t network::train_sgd(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter, const size_t & batch_size)
+size_t network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter, const size_t & batch_size, const double & alpha)
 {
 	_os_open
 
 	init(inputs.n_rows, outputs.n_rows, n_neurons);
 
 	deltas_w.resize(layers.size());
+	deltas_b.resize(layers.size());
 	std::vector<bool> visited;
 
 	double error = 1;
@@ -29,9 +30,12 @@ size_t network::train_sgd(const mat & inputs, const mat & outputs, const vector<
 	uint_t ix;
 
 	vec dl_da;
-	
+
 	for(uint_t i = 0; i < layers.size(); ++i)
+	{
 		deltas_w[i].zeros(size(layers[i].weights));
+		deltas_b[i].zeros(size(layers[i].bias));
+	}
 
 	while(iter < n_iter && error > tol_error)
 	{
@@ -40,7 +44,7 @@ size_t network::train_sgd(const mat & inputs, const mat & outputs, const vector<
 
 		error = 0;
 		for(uint_t s = 0; s < inputs.n_cols; ++s)
-		{	
+		{
 			while(visited[ix = rand() % inputs.n_cols]);
 
 			visited[ix] = true;
@@ -52,99 +56,31 @@ size_t network::train_sgd(const mat & inputs, const mat & outputs, const vector<
 
 			vec dl_da = o_layer() - output;
 			mat da_dx;
+			mat dl_dw;
+
 			for(uint_t i = layers.size() - 1; i > 0; --i)
-				layers[i].backward_sgd(dl_da, da_dx, deltas_w[i], layers[i - 1]);
-			layers[0].backward_sgd(dl_da, da_dx, deltas_w[0], input);
-			
+			{
+				layers[i].backward(dl_da, da_dx, dl_dw, layers[i - 1]);
+				deltas_w[i] += dl_dw;
+				deltas_b[i] += dl_da;
+			}
+			layers[0].backward(dl_da, da_dx, dl_dw, input);
+			deltas_w[0] += dl_dw;
+			deltas_b[0] += dl_da;
+
 			if(!(s % batch_size))
 			{
 				for(uint_t i = 0; i < layers.size(); ++i)
 				{
-					layers[i].weights -= eta * deltas_w[i] / batch_size;
+					layers[i].weights -= (1 - alpha) * eta * deltas_w[i] / batch_size;
+					layers[i].bias -= (1 - alpha) * eta * deltas_b[i] / batch_size;
 					deltas_w[i].zeros();
+					deltas_b[i].zeros();
 				}
 			}
 		}
 		error /= inputs.n_cols;
-	
-		_os_error(iter, error)
-	}
-	_os_close
 
-	return iter;
-}
-
-size_t network::train_momentum(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter, const double & alpha)
-{
-	_os_open
-	init(inputs.n_rows, outputs.n_rows, n_neurons);
-
-	deltas_w.resize(layers.size());
-	for(uint_t i = 0; i < layers.size(); ++i)
-		deltas_w[i].zeros(size(layers[i].weights));
-
-	double error = 1;
-	size_t iter = 0;
-	while(iter < n_iter && error > tol_error)
-	{
-		iter++;
-
-		error = 0;
-		for(uint_t c = 0; c < inputs.n_cols; ++c)
-		{
-			const vec & input = inputs.col(c);
-			const vec & output = outputs.col(c);
-
-			forward(input, output);
-			error += o_layer().index_max() != output.index_max();
-
-			vec dl_da = o_layer() - output;
-			mat da_dx;
-
-			for(uint_t i = layers.size() - 1; i > 0; i--)
-				layers[i].backward_momentum(dl_da, da_dx, deltas_w[i], layers[i - 1], alpha);
-
-			layers[0].backward_momentum(dl_da, da_dx, deltas_w[0], input, alpha);
-		}
-
-		error /= inputs.n_cols;
-		_os_error(iter, error)
-	}
-	_os_close
-
-	return iter;
-}
-
-size_t network::train(const mat & inputs, const mat & outputs, const vector<size_t> & n_neurons, const size_t & n_iter)
-{
-	_os_open
-	init(inputs.n_rows, outputs.n_rows, n_neurons);
-
-	double error = 1;
-	size_t iter = 0;
-	while(iter < n_iter && error > tol_error)
-	{
-		iter++;
-
-		error = 0;
-		for(uint_t c = 0; c < inputs.n_cols; ++c)
-		{
-			const vec & input = inputs.col(c);
-			const vec & output = outputs.col(c);
-
-			forward(input, output);
-			error += o_layer().index_max() != output.index_max();
-
-			vec dl_da = o_layer() - output;
-			mat da_dx;
-
-			for(uint_t i = layers.size() - 1; i > 0; i--)
-				layers[i].backward(dl_da, da_dx, layers[i - 1]);
-
-			layers[0].backward(dl_da, da_dx, input);
-		}
-
-		error /= inputs.n_cols;
 		_os_error(iter, error)
 	}
 	_os_close

@@ -20,75 +20,30 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	network net(n_neurons.size());
 
-	train_type = "normal";
-	TIC(train_time)
-	n_iter = net.train(train_in, train_out, n_neurons, max_n_iter);
-	TOC(train_time)
+	auto test = [&](const char * type, const size_t & batch_size, const size_t & alpha_momentum)
+	{
+		train_type = type;
+		TIC(train_time)
+		n_iter = net.train(train_in, train_out, n_neurons, max_n_iter, batch_size, alpha_momentum);
+		TOC(train_time)
 
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
+		train_error = net.test(train_in, train_out);
+		test_error = net.test(test_in, test_out);
 
-	PRINT_RESULT gen_plot();
+		PRINT_RESULT gen_plot();
+	};
 
-	train_type = "momentum";
-	TIC(train_time)
-	n_iter = net.train_momentum(train_in, train_out, n_neurons, max_n_iter);
-	TOC(train_time)
+	test("sgd_32", 32, 0);
+	test("sgd_16", 16, 0);
+	test("sgd_8", 8, 0);
+	test("sgd_4", 4, 0);
+	test("sgd_1", 1, 0);
 
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
-
-	train_type = "sgd_32";
-	TIC(train_time)
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 32);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
-	
-	train_type = "sgd_16";
-	TIC(train_time)
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 16);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
-
-	train_type = "sgd_8";
-	TIC(train_time)
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 8);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
-	
-	train_type = "sgd_4";
-	TIC(train_time)
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 4);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
-
-	train_type = "sgd_1";
-	TIC(train_time)
-	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 1);
-	TOC(train_time)
-
-	train_error = net.test(train_in, train_out);
-	test_error = net.test(test_in, test_out);
-
-	PRINT_RESULT gen_plot();
+	test("momentum_sgd_32", 32, 0);
+	test("momentum_sgd_16", 16, 0);
+	test("momentum_sgd_8", 8, 0);
+	test("momentum_sgd_4", 4, 0);
+	test("momentum_sgd_1", 1, 0);
 }
 
 /**************************************************************************************************/
