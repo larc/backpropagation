@@ -100,7 +100,7 @@ void read_mnist_labels(mat & labels, const string & file)
 	labels.zeros();
 
 	int8_t label;
-	for(int32_t i = 0; i < n; i++)
+	for(int32_t i = 0; i < n; ++i)
 	{
 		is.read((char *) &label, sizeof(int8_t));
 		labels((int) label, i) = 1;
@@ -129,11 +129,11 @@ void read_mnist_data(mat & data, const string & file)
 	data.resize(size, n);
 	double * memptr;
 
-	for(int32_t i = 0; i < n; i++)
+	for(int32_t i = 0; i < n; ++i)
 	{
 		is.read((char *) buffer, size);
 		memptr = data.colptr(i);
-		for(index_t j = 0; j < size; j++)
+		for(uint_t j = 0; j < size; ++j)
 			memptr[j] = (double) buffer[j];
 	}
 

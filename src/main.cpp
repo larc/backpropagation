@@ -14,7 +14,7 @@ void main_mnist();
 int main()
 {
 	PRINT_HEADER
-//	main_mnist();
+	//main_mnist();
 	main_iris();
 
 	return 0;
@@ -50,7 +50,7 @@ void main_iris()
 
 	ifstream is(data_path("iris.txt"));
 
-	for(index_t a = 0, b = 0, i = 0; i < 150; i++)
+	for(uint_t a = 0, b = 0, i = 0; i < 150; ++i)
 	{
 		if( (i % 50) < 40)
 		{
@@ -71,7 +71,7 @@ void main_iris()
 	auto normalise = [](mat & in)
 	{
 		double max_v, min_v;
-		for(index_t i = 0; i < in.n_rows; i++)
+		for(uint_t i = 0; i < in.n_rows; ++i)
 		{
 			max_v = max(in.row(i));
 			min_v = min(in.row(i));

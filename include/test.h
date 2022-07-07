@@ -22,8 +22,8 @@ struct test_nn
 	double train_time;
 	size_t n_iter;
 	size_t h_layers;
-	percent_t train_error;
-	percent_t test_error;
+	double train_error;
+	double test_error;
 
 	test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & _n_iter);
 };
