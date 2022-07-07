@@ -2,13 +2,29 @@
 
 This code is a simple implementation of the backpropagation neural networks algorithm in c++ using the library [Armadillo](http://arma.sourceforge.net/) for matrix operations.
 
+## Algorithm
+
+### Neural network
+
+### $$a^L(x, w^1, ..., w^L) = h^L(h^{L-1}(h^{L-2}(...h^1(x, w^1), ...), w^{L-2}), w^{L-1}), w^L)$$
+
+where $x$: input, $w^l$: layer parameters, $a^l = h^l(x, w^l)$ non-(linear) function.
+
+Given a training set $(X, Y)$ we want to find the optimal parameteres:
+
+### $$w^* = \arg \min_w \sum_{(x, y) \in (X, Y)} L(y, a^L(x, w))$$
+
+### Gradient-based learning
+
+### $$w^{t+1} = w^t - \eta_t \nabla_w L$$
+
 ## Build and Compile
 
-    mkdir build
-    cd build
-    cmake ..
-    make
-    ./backpropagation
+	mkdir build
+	cd build
+	cmake ..
+	make
+	./backpropagation
 
 ## Datasets
 
