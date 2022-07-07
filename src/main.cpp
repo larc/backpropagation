@@ -82,7 +82,6 @@ void main_iris()
 	normalise(train_in);
 	normalise(test_in);
 
-	shuffle(train_in);
 	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 20000);
 }
 

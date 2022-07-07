@@ -40,7 +40,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	PRINT_RESULT gen_plot();
 
-	train_type = "mini_batches";
+	train_type = "sgd_32";
 	TIC(train_time)
 	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 32);
 	TOC(train_time)
@@ -49,10 +49,10 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	test_error = net.test(test_in, test_out);
 
 	PRINT_RESULT gen_plot();
-
-	train_type = "normal_new";
+	
+	train_type = "sgd_16";
 	TIC(train_time)
-	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter);
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 16);
 	TOC(train_time)
 
 	train_error = net.test(train_in, train_out);
@@ -60,9 +60,19 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	PRINT_RESULT gen_plot();
 
-	train_type = "momentum_new";
+	train_type = "sgd_8";
 	TIC(train_time)
-	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter, 1, 0.2);
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 8);
+	TOC(train_time)
+
+	train_error = net.test(train_in, train_out);
+	test_error = net.test(test_in, test_out);
+
+	PRINT_RESULT gen_plot();
+	
+	train_type = "sgd_4";
+	TIC(train_time)
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 4);
 	TOC(train_time)
 
 	train_error = net.test(train_in, train_out);
@@ -70,16 +80,15 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	PRINT_RESULT gen_plot();
 
-	train_type = "mini_batches_new";
+	train_type = "sgd_1";
 	TIC(train_time)
-	n_iter = net.train_new(train_in, train_out, n_neurons, max_n_iter, 32);
+	n_iter = net.train_sgd(train_in, train_out, n_neurons, max_n_iter, 1);
 	TOC(train_time)
 
 	train_error = net.test(train_in, train_out);
 	test_error = net.test(test_in, test_out);
 
 	PRINT_RESULT gen_plot();
-
 }
 
 /**************************************************************************************************/

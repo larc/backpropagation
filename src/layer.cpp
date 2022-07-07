@@ -1,16 +1,6 @@
 #include "layer.h"
 
 
-double sigmoid(const double & x)
-{
-	return 1 / (1 + exp(-x));
-}
-
-double d_sigmoid(const double & x)
-{
-	return sigmoid(x) * (1 - sigmoid(x));
-}
-
 function_t layer::f = sigmoid;
 function_t layer::df = d_sigmoid;
 
@@ -92,5 +82,26 @@ void layer::backward(vec & dl_da, mat & da_dx, const vec & x)
 
 	weights -= eta * dl_dw;
 	bias -= eta * dl_da;
+}
+
+
+double sigmoid(const double & x)
+{
+	return 1 / (1 + exp(-x));
+}
+
+double d_sigmoid(const double & x)
+{
+	return sigmoid(x) * (1 - sigmoid(x));
+}
+
+double relu(const double & x)
+{
+	return x > 0 ? x : 0;
+}
+
+double d_relu(const double & x)
+{
+	return x > 0 ? 1 : 0;
 }
 
