@@ -42,21 +42,11 @@ Given a training set $(X, Y)$ we want to find the optimal parameteres:
 
 The test folder contains some scripts to plot the curve of error per iteration. The table below shows the output with some results for training and testing with the mnist and iris datasets.
 
-|      dataset |       train_type |   train_time |       n_iter |     h_layers |  train_error |   test_error |          h_units |
-| -----------: | ---------------: | -----------: | -----------: | -----------: | -----------: | -----------: | ---------------: |
-|        mnist |           normal |     1122.792 |           45 |            1 |        1.593 |        6.860 |              300 |
-|        mnist |         momentum |     1574.166 |           46 |            1 |        1.277 |        6.860 |              300 |
-|        mnist |     mini_batches |     1251.950 |          100 |            1 |       17.890 |       18.200 |              300 |
-|        mnist |       normal_new |     1469.569 |           47 |            1 |        1.572 |        6.830 |              300 |
-|        mnist |     momentum_new |     1515.006 |           54 |            1 |        1.392 |        6.730 |              300 |
-|        mnist | mini_batches_new |     2378.059 |          100 |            1 |       18.183 |       18.340 |              300 |
-
-
-### new
 
 |      dataset |               train_type |   train_time |       n_iter |     h_layers |  train_error |   test_error |          h_units |
 | -----------: | -----------------------: | -----------: | -----------: | -----------: | -----------: | -----------: | ---------------: |
-|        mnist |           sigmoid_sgd_32 |     2287.099 |          100 |            1 |        2.745 |        3.350 |              300 |
+|        mnist |           sigmoid_sgd_32 |     2291.453 |          100 |            1 |        2.672 |        3.310 |              300 |
+|        mnist |           sigmoid_sgd_16 |     2407.149 |          100 |            1 |        1.330 |        2.410 |              300 |
 |         iris |           sigmoid_sgd_32 |        3.457 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
 |         iris |      sigmoid_momentum_32 |        3.418 |        20000 |            2 |        1.667 |        0.000 |              8 6 |
 |         iris |              relu_sgd_32 |        1.446 |        10821 |            2 |        0.833 |        0.000 |              8 6 |
