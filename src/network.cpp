@@ -27,7 +27,6 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 	deltas_b.resize(layers.size());
 	std::vector<bool> visited;
 
-	double error = 1;
 	size_t iter = 0;
 	uint_t ix;
 
@@ -40,13 +39,13 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 		deltas_w[i] = sum_deltas_w[i];
 		deltas_b[i] = sum_deltas_b[i];
 	}
-
-	while(iter < n_iter && error > tol_error)
+	
+	double error;
+	while(iter < n_iter && (error = test(inputs, outputs)) > tol_error)
 	{
 		++iter;
 		visited.assign(inputs.n_cols, false);
 
-		error = 0;
 		for(uint_t s = 0; s < inputs.n_cols; ++s)
 		{
 			while(visited[ix = rand() % inputs.n_cols]);
@@ -56,7 +55,6 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 			const vec & output = outputs.col(ix);
 
 			forward(input, output);
-			error += o_layer().index_max() != output.index_max();
 
 			vec dl_da = o_layer() - output;
 			mat da_dx;
@@ -85,7 +83,6 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 				}
 			}
 		}
-		error /= inputs.n_cols;
 
 		_os_error(iter, error)
 	}
