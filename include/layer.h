@@ -13,7 +13,7 @@ using function_t = double (*) (const double &);
 
 class layer
 {
-	private:
+	public:
 		static function_t f;
 		static function_t df;
 

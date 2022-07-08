@@ -29,6 +29,8 @@ class network
 
 	private:
 		vector<layer> layers;
+		vector<mat> sum_deltas_w;
+		vector<vec> sum_deltas_b;
 		vector<mat> deltas_w;
 		vector<vec> deltas_b;
 		double loss;

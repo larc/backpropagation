@@ -21,6 +21,8 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 
 	init(inputs.n_rows, outputs.n_rows, n_neurons);
 
+	sum_deltas_w.resize(layers.size());
+	sum_deltas_b.resize(layers.size());
 	deltas_w.resize(layers.size());
 	deltas_b.resize(layers.size());
 	std::vector<bool> visited;
@@ -33,8 +35,10 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 
 	for(uint_t i = 0; i < layers.size(); ++i)
 	{
-		deltas_w[i].zeros(size(layers[i].weights));
-		deltas_b[i].zeros(size(layers[i].bias));
+		sum_deltas_w[i].zeros(size(layers[i].weights));
+		sum_deltas_b[i].zeros(size(layers[i].bias));
+		deltas_w[i] = sum_deltas_w[i];
+		deltas_b[i] = sum_deltas_b[i];
 	}
 
 	while(iter < n_iter && error > tol_error)
@@ -61,21 +65,23 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 			for(uint_t i = layers.size() - 1; i > 0; --i)
 			{
 				layers[i].backward(dl_da, da_dx, dl_dw, layers[i - 1]);
-				deltas_w[i] += dl_dw;
-				deltas_b[i] += dl_da;
+				sum_deltas_w[i] += dl_dw;
+				sum_deltas_b[i] += dl_da;
 			}
 			layers[0].backward(dl_da, da_dx, dl_dw, input);
-			deltas_w[0] += dl_dw;
-			deltas_b[0] += dl_da;
+			sum_deltas_w[0] += dl_dw;
+			sum_deltas_b[0] += dl_da;
 
 			if(!(s % batch_size))
 			{
 				for(uint_t i = 0; i < layers.size(); ++i)
 				{
-					layers[i].weights -= (1 - alpha) * eta * deltas_w[i] / batch_size;
-					layers[i].bias -= (1 - alpha) * eta * deltas_b[i] / batch_size;
-					deltas_w[i].zeros();
-					deltas_b[i].zeros();
+					deltas_w[i] = alpha * deltas_w[i] - eta * sum_deltas_w[i] / batch_size;
+					deltas_b[i] = alpha * deltas_b[i] - eta * sum_deltas_b[i] / batch_size;
+					layers[i].weights += deltas_w[i];
+					layers[i].bias += deltas_b[i];
+					sum_deltas_w[i].zeros();
+					sum_deltas_b[i].zeros();
 				}
 			}
 		}
