@@ -8,15 +8,19 @@ This code is a simple implementation of the backpropagation neural networks algo
 
 ### $$a^L(x, w^1, ..., w^L) = h^L(h^{L-1}(h^{L-2}(...h^1(x, w^1), ...), w^{L-2}), w^{L-1}), w^L)$$
 
-where $x$: input, $w^l$: layer parameters, $a^l = h^l(x, w^l)$ non-(linear) function.
+where $x$: input, $w^l$: layer parameters, $a^l = h^l(x, w^l)$: non-(linear) function.
 
 Given a training set $(X, Y)$ we want to find the optimal parameteres:
 
 ### $$w^* = \arg \min_w \sum_{(x, y) \in (X, Y)} L(y, a^L(x, w))$$
 
-### Gradient-based learning
+### Gradient-based learning $$w^{t+1} = w^t - \eta_t \nabla_w L$$
 
-### $$w^{t+1} = w^t - \eta_t \nabla_w L$$
+### Stochastic Gradient Descent $$w^{t + 1} = w^t - \frac{\eta_t}{|B|} \sum_{b \in B} \nabla_w L_b$$
+
+### SGD Momentum $$\Delta w = \alpha \Delta w - \frac{\eta_t}{|B|} \sum_{b \in B} \nabla_w L_b$$
+### $$w^{t+1} = w^t + \Delta w$$
+
 
 ## Build and Compile
 
