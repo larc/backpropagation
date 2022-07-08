@@ -20,7 +20,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 
 	network net(n_neurons.size());
 
-	auto test = [&](const char * type, const size_t & batch_size, const size_t & alpha_momentum)
+	auto test = [&](const char * type, const size_t & batch_size, const double & alpha_momentum)
 	{
 		train_type = type;
 		TIC(train_time)
@@ -43,7 +43,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 		test(train_label, b, 0);
 
 		sprintf(train_label, "sigmoid_momentum_%d", b);
-		test(train_label, b, 0);
+		test(train_label, b, 0.9);
 
 		layer::f = relu;
 		layer::df = d_relu;
@@ -52,7 +52,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 		test(train_label, b, 0);
 
 		sprintf(train_label, "relu_momentum_%d", b);
-		test(train_label, b, 0);
+		test(train_label, b, 0.9);
 	}
 }
 
