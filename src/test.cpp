@@ -33,31 +33,27 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 		PRINT_RESULT gen_plot();
 	};
 
-	layer::f = sigmoid;
-	layer::df = d_sigmoid;
-	test("sgd_32", 32, 0);
-	test("sgd_16", 16, 0);
-	test("sgd_8", 8, 0);
-	test("sgd_4", 4, 0);
-	test("sgd_1", 1, 0);
-	test("momentum_sgd_32", 32, 0.9);
-	test("momentum_sgd_16", 16, 0.9);
-	test("momentum_sgd_8", 8, 0.9);
-	test("momentum_sgd_4", 4, 0.9);
-	test("momentum_sgd_1", 1, 0.9);
+	char train_label[128];
+	for(uint_t b: {32, 16, 4, 1})
+	{
+		layer::f = sigmoid;
+		layer::df = d_sigmoid;
 
-	layer::f = relu;
-	layer::df = d_relu;
-	test("relu_sgd_32", 32, 0);
-	test("relu_sgd_16", 16, 0);
-	test("relu_sgd_8", 8, 0);
-	test("relu_sgd_4", 4, 0);
-	test("relu_sgd_1", 1, 0);
-	test("momentum_sgd_32", 32, 0.9);
-	test("momentum_sgd_16", 16, 0.9);
-	test("momentum_sgd_8", 8, 0.9);
-	test("momentum_sgd_4", 4, 0.9);
-	test("momentum_sgd_1", 1, 0.9);
+		sprintf(train_label, "sigmoid_sgd_%d", b);
+		test(train_label, b, 0);
+
+		sprintf(train_label, "sigmoid_momentum_%d", b);
+		test(train_label, b, 0);
+
+		layer::f = relu;
+		layer::df = d_relu;
+
+		sprintf(train_label, "relu_sigmoid_sgd_%d", b);
+		test(train_label, b, 0);
+
+		sprintf(train_label, "relu_sigmoid_momentum_%d", b);
+		test(train_label, b, 0);
+	}
 }
 
 /**************************************************************************************************/
