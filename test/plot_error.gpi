@@ -10,5 +10,5 @@ set yrange [*:]
 set output "../tmp/plot_error.pdf"
 FILES = system("ls ../tmp/*.error")
 do for [i=1:words(FILES)] {
-	plot word(FILES, i) u 1:2 w l lw 1 t word(FILES, i)
+	plot word(FILES, i) u 1:2 w l lw 2 t word(FILES, i)
 }

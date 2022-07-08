@@ -56,19 +56,20 @@ The test folder contains some scripts to plot the curve of error per iteration. 
 
 |      dataset |               train_type |   train_time |       n_iter |     h_layers |  train_error |   test_error |          h_units |
 | -----------: | -----------------------: | -----------: | -----------: | -----------: | -----------: | -----------: | ---------------: |
-|         iris |           sigmoid_sgd_32 |        3.509 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
-|         iris |      sigmoid_momentum_32 |        3.445 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
-|         iris |      relu_sigmoid_sgd_32 |        1.444 |        10640 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris | relu_sigmoid_momentum_32 |        1.537 |        11307 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |           sigmoid_sgd_16 |        3.517 |        20000 |            2 |        8.333 |       13.333 |              8 6 |
-|         iris |      sigmoid_momentum_16 |        3.539 |        20000 |            2 |       28.333 |       26.667 |              8 6 |
-|         iris |      relu_sigmoid_sgd_16 |        1.102 |         7993 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris | relu_sigmoid_momentum_16 |        0.969 |         7172 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |            sigmoid_sgd_4 |        2.710 |        14907 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |       sigmoid_momentum_4 |        2.797 |        15376 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |       relu_sigmoid_sgd_4 |        0.787 |         5540 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |  relu_sigmoid_momentum_4 |        0.758 |         5248 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |            sigmoid_sgd_1 |        1.645 |         8245 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |       sigmoid_momentum_1 |        1.806 |         8926 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |       relu_sigmoid_sgd_1 |        0.523 |         3224 |            2 |        0.833 |        0.000 |              8 6 |
-|         iris |  relu_sigmoid_momentum_1 |        0.465 |         2822 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |           sigmoid_sgd_32 |        3.542 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
+|         iris |      sigmoid_momentum_32 |        3.480 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
+|         iris |              relu_sgd_32 |        1.530 |        11103 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |         relu_momentum_32 |        1.691 |        12295 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |           sigmoid_sgd_16 |        3.542 |        20000 |            2 |       12.500 |       16.667 |              8 6 |
+|         iris |      sigmoid_momentum_16 |        3.580 |        20000 |            2 |       33.333 |       33.333 |              8 6 |
+|         iris |              relu_sgd_16 |        1.015 |         7137 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |         relu_momentum_16 |        0.981 |         6859 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |            sigmoid_sgd_4 |        2.787 |        15402 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |       sigmoid_momentum_4 |        2.771 |        15424 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |               relu_sgd_4 |        0.708 |         5090 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |          relu_momentum_4 |        0.710 |         5094 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |            sigmoid_sgd_1 |        1.905 |         9642 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |       sigmoid_momentum_1 |        1.548 |         7855 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |               relu_sgd_1 |        0.396 |         2483 |            2 |        0.833 |        0.000 |              8 6 |
+|         iris |          relu_momentum_1 |        0.364 |         2327 |            2 |        0.833 |        0.000 |              8 6 |
+
