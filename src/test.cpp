@@ -3,7 +3,7 @@
 #include <cassert>
 
 
-test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & max_n_iter)
+test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & max_n_iter, const double & eta)
 {
 	dataset = _dataset;
 	h_layers = n_neurons.size();
@@ -19,6 +19,7 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 	};
 
 	network net(n_neurons.size());
+	net.eta = eta;
 
 	auto test = [&](const char * type, const size_t & batch_size, const double & alpha_momentum)
 	{
@@ -45,14 +46,14 @@ test_nn::test_nn(const char * _dataset, const mat & train_in, const mat & train_
 		sprintf(train_label, "sigmoid_momentum_%d", b);
 		test(train_label, b, 0.9);
 
-		layer::f = relu;
-		layer::df = d_relu;
+		//layer::f = relu;
+		//layer::df = d_relu;
 
-		sprintf(train_label, "relu_sgd_%d", b);
-		test(train_label, b, 0);
+		//sprintf(train_label, "relu_sgd_%d", b);
+		//test(train_label, b, 0);
 
-		sprintf(train_label, "relu_momentum_%d", b);
-		test(train_label, b, 0.9);
+		//sprintf(train_label, "relu_momentum_%d", b);
+		//test(train_label, b, 0.9);
 	}
 }
 

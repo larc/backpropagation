@@ -25,7 +25,7 @@ struct test_nn
 	double train_error;
 	double test_error;
 
-	test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & _n_iter);
+	test_nn(const char * _dataset, const mat & train_in, const mat & train_out, const mat & test_in, const mat & test_out, const vector<size_t> & n_neurons, const size_t & _n_iter, const double & eta);
 };
 
 /**************************************************************************************************/

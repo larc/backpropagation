@@ -13,8 +13,10 @@ void main_mnist();
 
 int main()
 {
+	srand(time(NULL));
+
 	PRINT_HEADER
-	main_mnist();
+//	main_mnist();
 	main_iris();
 
 	return 0;
@@ -35,38 +37,55 @@ void main_mnist()
 	test_in /= 255;
 
 	// http://yann.lecun.com/exdb/mnist/
-	test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 100);
+	test_nn("mnist", train_in, train_out, test_in, test_out, {300}, 1000, 0.001);
+	test_nn("mnist", train_in, train_out, test_in, test_out, {300, 100}, 1000, 0.001);
+	test_nn("mnist", train_in, train_out, test_in, test_out, {500, 150}, 1000, 0.001);
 }
 
 
 void main_iris()
 {
+	string slabel;
+	ifstream is(data_path("iris.txt"));
+
+	mat data(4, 150);
+	vector<uint_t> labels(150);
+	for(uint_t i = 0; i < data.n_cols; ++i)
+	{
+		is >> data(0, i) >> data(1, i) >> data(2, i) >> data(3, i) >> slabel;
+		labels[i] = i / 50;
+	}
+
+	is.close();
+
+
 	mat train_in(4, 120);
 	mat train_out(3, 120, fill::zeros);
 	mat test_in(4, 30);
 	mat test_out(3, 30, fill::zeros);
 
-	string slabel;
+	vector<bool> visited;
+	visited.assign(data.n_cols, false);
 
-	ifstream is(data_path("iris.txt"));
-
-	for(uint_t a = 0, b = 0, i = 0; i < 150; ++i)
+	uint_t ix;
+	for(uint_t i = 0; i < train_in.n_cols; ++i)
 	{
-		if( (i % 50) < 40)
-		{
-			is >> train_in(0, a) >> train_in(1, a) >> train_in(2, a) >> train_in(3, a) >> slabel;
-			train_out(i / 50, a) = 1;
-			a++;
-		}
-		else
-		{
-			is >> test_in(0, b) >> test_in(1, b) >> test_in(2, b) >> test_in(3, b) >> slabel;
-			test_out(i / 50, b) = 1;
-			b++;
-		}
+		while(visited[ix = rand() % data.n_cols]);
+
+		visited[ix] = true;
+		train_in.col(i) = data.col(ix);
+		train_out(labels[ix], i) = 1;
 	}
 
-	is.close();
+	for(uint_t i = 0; i < test_in.n_cols; ++i)
+	{
+		while(visited[ix = rand() % data.n_cols]);
+
+		visited[ix] = true;
+		test_in.col(i) = data.col(ix);
+		test_out(labels[ix], i) = 1;
+	}
+
 
 	auto normalise = [](mat & in)
 	{
@@ -82,6 +101,6 @@ void main_iris()
 	normalise(train_in);
 	normalise(test_in);
 
-	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 20000);
+	test_nn("iris", train_in, train_out, test_in, test_out, {8, 6}, 100000, 0.1);
 }
 

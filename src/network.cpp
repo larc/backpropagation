@@ -6,7 +6,6 @@
 
 network::network(const size_t & h_layers)
 {
-	srand(time(NULL));
 	layers.resize(h_layers + 1);
 }
 
@@ -39,7 +38,7 @@ size_t network::train(const mat & inputs, const mat & outputs, const vector<size
 		deltas_w[i] = sum_deltas_w[i];
 		deltas_b[i] = sum_deltas_b[i];
 	}
-	
+
 	double error;
 	while(iter < n_iter && (error = test(inputs, outputs)) > tol_error)
 	{
