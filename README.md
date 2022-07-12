@@ -50,6 +50,8 @@ The test folder contains some scripts to plot the curve of error per iteration. 
 |        mnist |      sigmoid_momentum_16 |    23585.393 |         1000 |            1 |        1.337 |        2.410 |              300 |
 |        mnist |            sigmoid_sgd_4 |    28836.071 |         1000 |            1 |        3.240 |        3.590 |              300 |
 |        mnist |       sigmoid_momentum_4 |    10301.486 |          322 |            1 |        1.000 |        2.170 |              300 |
+|        mnist |            sigmoid_sgd_1 |    38109.302 |          762 |            1 |        0.998 |        2.250 |              300 |
+|        mnist |       sigmoid_momentum_1 |     7034.200 |           83 |            1 |        1.000 |        2.280 |              300 |
 |         iris |           sigmoid_sgd_32 |        3.457 |        20000 |            2 |       66.667 |       66.667 |              8 6 |
 |         iris |      sigmoid_momentum_32 |        3.418 |        20000 |            2 |        1.667 |        0.000 |              8 6 |
 |         iris |              relu_sgd_32 |        1.446 |        10821 |            2 |        0.833 |        0.000 |              8 6 |
